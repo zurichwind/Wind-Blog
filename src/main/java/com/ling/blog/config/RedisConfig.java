@@ -1,6 +1,7 @@
 package com.ling.blog.config;
 
 
+import com.ling.blog.utils.FastJsonRedisSerializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
