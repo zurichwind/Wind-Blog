@@ -9,6 +9,7 @@ import com.ling.blog.service.LinkService;
 import com.ling.blog.utils.BeanCopyUtils;
 import com.ling.blog.utils.ResponseResult;
 import com.ling.blog.vo.LinkVo;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,6 +20,7 @@ import java.util.List;
  * @Author : 风间离
  * @Create 2023/7/25  16:24
  */
+@Slf4j
 @Service
 public class LinkServiceImpl  extends ServiceImpl<LinkMapper, Link> implements LinkService {
     @Override
@@ -29,6 +31,7 @@ public class LinkServiceImpl  extends ServiceImpl<LinkMapper, Link> implements L
         List<Link> links = list(queryWrapper);
         //转换成vo
         List<LinkVo> linkVos =  BeanCopyUtils.copyBeanList(links, LinkVo.class);
+        log.info(linkVos.toString());
         //封装返回
         return ResponseResult.okResult(linkVos);
     }

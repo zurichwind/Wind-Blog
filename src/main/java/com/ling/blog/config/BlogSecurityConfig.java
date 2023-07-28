@@ -62,7 +62,7 @@ public class BlogSecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http, PersistentTokenRepository repository) throws  Exception {
         return http
                 .authorizeHttpRequests()
-                .requestMatchers("/**").permitAll()
+                .requestMatchers("/link/**","/article/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
