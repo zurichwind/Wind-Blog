@@ -24,4 +24,13 @@ public class GlobalExceptionHandler {
         //从异常对象中获取提示信息封装返回
         return ResponseResult.errorResult(e.getCode(), e.getMsg());
     }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseResult exceptionHandler(SystemException e) {
+        //打印异常信息
+        log.error("出现了异常！ {}", e);
+        //从异常对象中获取提示信息封装返回
+        return ResponseResult.errorResult(e.getCode(), e.getMsg());
+    }
+
 }
