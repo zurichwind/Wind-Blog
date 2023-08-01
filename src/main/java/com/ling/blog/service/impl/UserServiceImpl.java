@@ -1,5 +1,6 @@
 package com.ling.blog.service.impl;
 
+<<<<<<< HEAD
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -11,10 +12,16 @@ import com.ling.blog.exception.SystemException;
 import com.ling.blog.mapper.UserMapper;
 import com.ling.blog.service.RoleService;
 import com.ling.blog.service.UserRoleService;
+=======
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.ling.blog.entity.User;
+import com.ling.blog.mapper.UserMapper;
+>>>>>>> master/master
 import com.ling.blog.service.UserService;
 import com.ling.blog.utils.BeanCopyUtils;
 import com.ling.blog.utils.ResponseResult;
 import com.ling.blog.utils.SecurityUtils;
+<<<<<<< HEAD
 import com.ling.blog.vo.PageVo;
 import com.ling.blog.vo.UserDetailVo;
 import com.ling.blog.vo.UserInfoVo;
@@ -25,6 +32,10 @@ import org.springframework.util.StringUtils;
 
 import java.util.List;
 import java.util.stream.Collectors;
+=======
+import com.ling.blog.vo.UserInfoVo;
+import org.springframework.stereotype.Service;
+>>>>>>> master/master
 
 /**
  * Created by IntelliJ IDEA.
@@ -34,6 +45,7 @@ import java.util.stream.Collectors;
  */
 @Service("userService")
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
+<<<<<<< HEAD
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -44,6 +56,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Autowired
     private RoleService roleService;
 
+=======
+>>>>>>> master/master
     @Override
     public ResponseResult userInfo() {
         //获取当前用户id
@@ -51,8 +65,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         //根据用户id查询用户信息
         User user = getById(userId);
         //封装成UserInfoVo
+<<<<<<< HEAD
         UserInfoVo vo = BeanCopyUtils.copyBean(user,UserInfoVo.class);
         return ResponseResult.okResult(vo);
+=======
+        UserInfoVo userInfoVo = BeanCopyUtils.copyBean(user,UserInfoVo.class);
+        return ResponseResult.okResult(userInfoVo);
+>>>>>>> master/master
     }
 
     @Override
@@ -63,6 +82,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public ResponseResult register(User user) {
+<<<<<<< HEAD
         //对数据进行非空判断
         if(!StringUtils.hasText(user.getUserName())){
             throw new SystemException(AppHttpCodeEnum.USERNAME_NOT_NULL);
@@ -93,10 +113,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         //存入数据库
         save(user);
         return ResponseResult.okResult();
+=======
+        return null;
+>>>>>>> master/master
     }
 
     @Override
     public ResponseResult userList(Integer pageNum, Integer pageSize, String userName, String status, String phonenumber) {
+<<<<<<< HEAD
         LambdaQueryWrapper<User> Wrapper = new LambdaQueryWrapper<>();
         Wrapper.like(!(userName==""||userName==null),User::getUserName,userName);
         Wrapper.eq(!(phonenumber==""||phonenumber==null),User::getPhonenumber,phonenumber);
@@ -108,10 +132,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         page(page, Wrapper);
         PageVo pageVo = new PageVo(page.getRecords(),page.getTotal());
         return ResponseResult.okResult(pageVo);
+=======
+        return null;
+>>>>>>> master/master
     }
 
     @Override
     public ResponseResult insertUser(User user) {
+<<<<<<< HEAD
         if (user.getUserName()==null||user.getUserName()=="")
             return ResponseResult.errorResult(AppHttpCodeEnum.REQUIRE_USERNAME.getCode(),AppHttpCodeEnum.REQUIRE_USERNAME.getMsg());
         if (userNameExist(user.getUserName()))
@@ -129,20 +157,28 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         List<UserRole> userRoles = user.getRoleIds().stream().map(m -> new UserRole(user.getId(), Long.valueOf(m))).collect(Collectors.toList());
         userRoleService.saveBatch(userRoles);
         return ResponseResult.okResult();
+=======
+        return null;
+>>>>>>> master/master
     }
 
     @Override
     public ResponseResult deleteUser(Long id) {
+<<<<<<< HEAD
         //获取当前用户id
         Long userId = SecurityUtils.getUserId();
         if (userId.equals(id))
             return ResponseResult.errorResult(AppHttpCodeEnum.NOT_DELETE_NOWUSER.getCode(),AppHttpCodeEnum.NOT_DELETE_NOWUSER.getMsg());
         removeById(id);
         return ResponseResult.okResult();
+=======
+        return null;
+>>>>>>> master/master
     }
 
     @Override
     public ResponseResult userDetail(Long id) {
+<<<<<<< HEAD
         UserDetailVo userDetailVo = new UserDetailVo();
         LambdaQueryWrapper<UserRole> Wrapper = new LambdaQueryWrapper<>();
         Wrapper.eq(UserRole::getUserId,id);
@@ -178,5 +214,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         LambdaQueryWrapper<User> lambdaQueryWrapper = new LambdaQueryWrapper<>();
         lambdaQueryWrapper.eq(User::getEmail,email);
         return count(lambdaQueryWrapper)>0;
+=======
+        return null;
+>>>>>>> master/master
     }
 }

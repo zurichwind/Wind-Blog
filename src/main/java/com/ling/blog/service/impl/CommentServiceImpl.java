@@ -3,10 +3,14 @@ package com.ling.blog.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+<<<<<<< HEAD
 import com.ling.blog.constants.SystemConstants;
 import com.ling.blog.entity.Comment;
 import com.ling.blog.enums.AppHttpCodeEnum;
 import com.ling.blog.exception.SystemException;
+=======
+import com.ling.blog.entity.Comment;
+>>>>>>> master/master
 import com.ling.blog.mapper.CommentMapper;
 import com.ling.blog.service.CommentService;
 import com.ling.blog.service.UserService;
@@ -16,9 +20,13 @@ import com.ling.blog.utils.SecurityUtils;
 import com.ling.blog.vo.CommentVo;
 import com.ling.blog.vo.PageVo;
 import jakarta.annotation.Resource;
+<<<<<<< HEAD
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
+=======
+import org.springframework.stereotype.Service;
+>>>>>>> master/master
 
 import java.util.List;
 
@@ -32,12 +40,17 @@ import java.util.List;
 @Service("commentService")
 public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> implements CommentService {
 
+<<<<<<< HEAD
 
     @Autowired
+=======
+    @Resource
+>>>>>>> master/master
     private UserService userService;
 
     @Override
     public ResponseResult commentList(String commentType, Long articleId, Integer pageNum, Integer pageSize) {
+<<<<<<< HEAD
         //1.查询对应文章的根评论
         LambdaQueryWrapper<Comment> queryWrapper = new LambdaQueryWrapper<>();
         //对articleId进行判断
@@ -85,6 +98,23 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
         return commentVos;
     }
 
+=======
+        //查询对应文章的根评论
+
+        LambdaQueryWrapper<Comment> queryWrapper = new LambdaQueryWrapper<>();
+        //对articleId进行判断
+        queryWrapper.eq(Comment::getArticleId,articleId);
+        //根评论rootId为-1
+        queryWrapper.eq(Comment::getRootId,-1);
+        //分页查询
+        Page<Comment> page = new Page<>(pageNum,pageSize);
+        page(page,queryWrapper);
+
+        List<CommentVo> commentVoList = BeanCopyUtils.copyBeanList(page.getRecords(),CommentVo.class);
+        return ResponseResult.okResult(new PageVo(commentVoList,page.getTotal()));
+    }
+
+>>>>>>> master/master
     private List<CommentVo> toCommentVoList(List<Comment> list){
         List<CommentVo> commentVos = BeanCopyUtils.copyBeanList(list, CommentVo.class);//此时toCommentUserName和username没有值
         //遍历vo集合
@@ -101,4 +131,25 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
         }
         return commentVos;
     }
+<<<<<<< HEAD
+=======
+
+    private List<CommentVo> getChildren(Long id) {
+        LambdaQueryWrapper<Comment> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(Comment::getRootId,id);
+
+        List<Comment> comments = list(queryWrapper);
+
+        List<CommentVo> commentVos = toCommentVoList(comments);
+        return commentVos;
+    }
+
+    @Override
+    public ResponseResult addComment(Comment comment) {
+        comment.setCreateBy(SecurityUtils.getUserId());
+        save(comment);
+
+        return ResponseResult.okResult();
+    }
+>>>>>>> master/master
 }
