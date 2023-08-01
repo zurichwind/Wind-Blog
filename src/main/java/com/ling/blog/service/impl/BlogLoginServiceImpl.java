@@ -27,7 +27,6 @@ import java.util.Objects;
  */
 @Service
 public class BlogLoginServiceImpl implements BlogLoginService {
-
     @Autowired
     private AuthenticationManager authenticationManager;
 
@@ -37,11 +36,11 @@ public class BlogLoginServiceImpl implements BlogLoginService {
     @Override
     public ResponseResult login(User user) {
 
-        UsernamePasswordAuthenticationToken authenticationToken =
-                new UsernamePasswordAuthenticationToken(user.getUserName(),user.getPassword());
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(user.getUserName(),user.getPassword());
         Authentication authenticate = authenticationManager.authenticate(authenticationToken);
+
         //判断是否认证通过
-        if (Objects.isNull(authenticate)) {
+        if(Objects.isNull(authenticate)){
             throw new RuntimeException("用户名或密码错误");
         }
         //获取userid 生成token
@@ -49,8 +48,10 @@ public class BlogLoginServiceImpl implements BlogLoginService {
         String userId = loginUser.getUser().getId().toString();
         String jwt = JwtUtil.createJWT(userId);
         //把用户信息存入redis
-        redisCache.setCacheObject("bloglogin:" + userId,loginUser);
+        redisCache.setCacheObject("bloglogin:"+userId,loginUser);
+
         //把token和userinfo封装 返回
+        //把User转换成UserInfoVo
         UserInfoVo userInfoVo = BeanCopyUtils.copyBean(loginUser.getUser(), UserInfoVo.class);
         BlogUserLoginVo vo = new BlogUserLoginVo(jwt,userInfoVo);
         return ResponseResult.okResult(vo);
@@ -58,7 +59,7 @@ public class BlogLoginServiceImpl implements BlogLoginService {
 
     @Override
     public ResponseResult logout() {
-        //获取token解析获取userid
+        //获取token 解析获取userid
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         LoginUser loginUser = (LoginUser) authentication.getPrincipal();
         //获取userid

@@ -18,14 +18,17 @@ public enum AppHttpCodeEnum {
     PHONENUMBER_EXIST(502,"手机号已存在"),
     EMAIL_EXIST(503, "邮箱已存在"),
     REQUIRE_USERNAME(504, "必需填写用户名"),
-    CONTENT_NOT_NULL(506, "评论内容不能为空"),
-    FILE_TYPE_ERROR(507, "文件类型错误，请上传png文件"),
+    LOGIN_ERROR(505,"用户名或密码错误"),
+    CONTENT_NOT_NULL(506,"评论内容不能为空" ),
+    FILE_TYPE_ERROR(507,"文件类型错误，请上传png文件" ),
     USERNAME_NOT_NULL(508, "用户名不能为空"),
     NICKNAME_NOT_NULL(509, "昵称不能为空"),
     PASSWORD_NOT_NULL(510, "密码不能为空"),
     EMAIL_NOT_NULL(511, "邮箱不能为空"),
     NICKNAME_EXIST(512, "昵称已存在"),
-    LOGIN_ERROR(505,"用户名或密码错误");
+    PARENT_ID_NOT_BE_ID(513,"修改菜单'写博文'失败，上级菜单不能选择自己"),
+    HAVE_CHILDREN(514,"存在子菜单不允许删除"),
+    NOT_DELETE_NOWUSER(515,"不能删除当前操作用户" );
     int code;
     String msg;
 

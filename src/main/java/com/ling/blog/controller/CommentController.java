@@ -29,5 +29,10 @@ public class CommentController {
        return  commentService.addComment(comment);
     }
 
+    @GetMapping("/linkCommentList")
+    public ResponseResult linkCommentList(Integer pageNum, Integer pageSize) {
+        return commentService.commentList(SystemConstants.LINK_COMMENT, null, pageNum,pageSize);
+    }
+
 
 }
